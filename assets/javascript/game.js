@@ -20,12 +20,11 @@ var wins = 0;
 var losses = 0;
 var userGuess;
 
-// Function that udates the score
+// Function that updates the score
 function updateRemainingGuesses() {
   document.querySelector ("#game-counter").innerHTML = "<p>" + guessesRemaining + "</p";
 }
 
-document.getElementById("startButton").addEventListener("click", setupFunction);
 
 function setupFunction() {
   document.getElementById("instructions").innerHTML = "<p>You have entered the Game of Thrones</p>" + "<p>You must defeat five major houses. Defeating five major houses will encourage George R.R. Martin to finish the book series before the T.V. series. The game is won, if, and only if, George R.R. Martin finishes the book series before the T.V. series.</p>";
@@ -57,7 +56,7 @@ function setupFunction() {
 };
 
 
-
+document.getElementById("startButton").addEventListener("click", setupFunction);
 // Ask user to guess a letter. 
 // document.getElementById("prompt").innerHTML = "<p>Please press a letter</p>";
 
@@ -69,34 +68,34 @@ document.onkeyup = function(event) {
 
   /* Compare the letter to lettersGuessed array, if the letter is in the lettersGuessed array --> notify user that they already guessed this letter. If the letter is not in the lettersGuessed array --> add letter to lettersGuessed array, subtract 1 from guessesRemaining, and compare letter to the randomWord array index. */
 
-  // for (var j = 0; j < lettersGuessed.length; j++) {
-  //   if (lettersGuessed[j] === userGuess) {
-  //     console.log("You have already guessed this letter.");
-  //     guessesRemaining = guessesRemaining - 1;
-  //     updateRemainingGuesses();
-  //   } else {
-  //     lettersGuessed.push(userGuess);
-  //     guessesRemaining - 1;
-  //     updateRemainingGuesses();
-  //     console.log(lettersGuessed);
-  //   }
-  // }
-  /*
-  Loop through the randomWord array, if the letter is in the randomWord array, at each index where letter is found, replace the corresponding blank in the blank array. If letter is not in the randomWord array, add letter to lettersGuessed array. 
-  */
-  for (var i = 0; i < randomArray; i++) {
-    if (randomArray[i] === userGuess) {
-      // randomWord[i] replaces corresponding index value of blanksArray?
-      blanksArray[i] === randomArray[i];
-    } else {
-      lettersGuessed.push(userGuess);
+  if (lettersGuessed.indexOf(userGuess) === -1) {
+    lettersGuessed.push(userGuess);
+    console.log(lettersGuessed);
+  } else {
+    console.log("You have already guessed this letter.");
+    guessesRemaining -= 1;
+    updateRemainingGuesses();
+    console.log(guessesRemaining);
+  }
 
+   // Loop through the randomWord array, if the letter is in the randomWord array, at each index where letter is found, replace the corresponding blank in the blank array. If letter is not in the randomWord array, add letter to lettersGuessed array. 
+
+  if (randomArray.indexOf(userGuess) === -1) {
+    guessesRemaining -= 1;
+    updateRemainingGuesses();
+    console.log(guessesRemaining);
+  } else {
+    for (var i = 0; i < randomArray.length; i++) { 
+      if (randomArray[i] === userGuess) {
+        blanksArray[i] === userGuess;
+      }
     }
+    console.log(blanksArray);
   }
 };
+ 
 
 
-// 3. Verify keystroke is a letter
 
 
 
@@ -107,8 +106,7 @@ document.onkeyup = function(event) {
 
   
 
-
-  /* 
+/* 
 1. Check to see if the user has correctly guessed all letters in randomWord array. 
 
 2. If user correctly guessed all letters --> display message and add +1 to wins counter. Remove the word from the wordBank array and store in usedWords array. Run function from #1.
@@ -124,11 +122,4 @@ if(i != -1) {
 4. If user wins 5 games --> end game and display message. Run function from #1. 
 
 5. If user loses 5 games --> end game and display message. Run function from #1. 
-
-
-
 */
-// function print(message) {
-//   var outputDiv = document.getElementById("output");
-//   outputDiv.innerHTML = message;
-// }
