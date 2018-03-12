@@ -80,18 +80,18 @@ document.onkeyup = function(event) {
 
    // Loop through the randomWord array, if the letter is in the randomWord array, at each index where letter is found, replace the corresponding blank in the blank array. If letter is not in the randomWord array, add letter to lettersGuessed array. 
 
-  if (randomArray.indexOf(userGuess) === -1) {
-    guessesRemaining -= 1;
-    updateRemainingGuesses();
-    console.log(guessesRemaining);
-  } else {
-    for (var i = 0; i < randomArray.length; i++) { 
-      if (randomArray[i] === userGuess) {
-        blanksArray[i] === userGuess;
-      }
+  // if (randomArray.indexOf(userGuess) === -1) {
+  //   guessesRemaining -= 1;
+  //   updateRemainingGuesses();
+  //   console.log(guessesRemaining);
+  // } else {
+  for (var i = 0; i < randomArray.length; i++) { 
+    if (userGuess === randomArray[i]) {
+      blanksArray[i] === userGuess;
     }
-    console.log(blanksArray);
   }
+  console.log(blanksArray);
+  // }
 };
  
 
