@@ -42,11 +42,13 @@ function setupFunction() {
 
   for (var i = 0; i < randomArray.length; i++) { 
     blanksArray[i] = " _ ";
-    document.getElementById("answer-blanks").innerHTML = "<p>" + blanksArray + "</p>";
   }
 
-  // Reset guesses variable to 10
-  guessesRemaining = 5;
+  document.getElementById("answer-blanks").innerHTML = "<p>" + blanksArray + "</p>";
+  document.getElementById("answer-blanks").innerHTML = blanksArray.join("");
+
+  // Reset guesses variable to 6
+  guessesRemaining = 6;
   updateRemainingGuesses();
 
  
@@ -56,7 +58,7 @@ function setupFunction() {
 };
 
 
-document.getElementById("startButton").addEventListener("click", setupFunction);
+// document.getElementById("startButton").addEventListener("click", setupFunction);
 // Ask user to guess a letter. 
 // document.getElementById("prompt").innerHTML = "<p>Please press a letter</p>";
 
@@ -71,10 +73,13 @@ document.onkeyup = function(event) {
   if (lettersGuessed.indexOf(userGuess) === -1) {
     lettersGuessed.push(userGuess);
     console.log(lettersGuessed);
-  } else {
-    console.log("You have already guessed this letter.");
+    document.getElementById("guessed-letters").innerHTML = lettersGuessed;
     guessesRemaining -= 1;
     updateRemainingGuesses();
+  } else {
+    console.log("You have already guessed this letter.");
+    updateRemainingGuesses();
+    guessesRemaining = guessesRemaining;
     console.log(guessesRemaining);
   }
 
@@ -87,12 +92,18 @@ document.onkeyup = function(event) {
   // } else {
   for (var i = 0; i < randomArray.length; i++) { 
     if (userGuess === randomArray[i]) {
-      blanksArray[i] === userGuess;
+      blanksArray[i] = userGuess;
+      // lettersGuessed.push(userGuess);
+      guessesRemaining -= 0;
+      console.log(blanksArray);
     }
   }
   console.log(blanksArray);
+  document.getElementById("answer-blanks").innerHTML = blanksArray.join("");
   // }
 };
+
+setupFunction();
  
 
 
