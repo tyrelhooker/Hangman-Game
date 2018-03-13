@@ -25,8 +25,12 @@ function updateRemainingGuesses() {
   document.querySelector ("#game-counter").innerHTML = "<p>" + guessesRemaining + "</p";
 }
 
+function gameScoreReset() {
+  wins = 0;
+  losses = 0;
+}
 
-function setupFunction() {
+function roundSetup() {
   document.getElementById("instructions").innerHTML = "<p>You have entered the Game of Thrones</p>" + "<p>You must defeat five major houses. Defeating five major houses will encourage George R.R. Martin to finish the book series before the T.V. series. The game is won, if, and only if, George R.R. Martin finishes the book series before the T.V. series.</p>";
 
   // Move a random word from wordBank to randomWord.   
@@ -58,20 +62,19 @@ function setupFunction() {
 };
 
 
-// document.getElementById("startButton").addEventListener("click", setupFunction);
+document.getElementById("startButton").addEventListener("click", roundSetup);
 // Ask user to guess a letter. 
 // document.getElementById("prompt").innerHTML = "<p>Please press a letter</p>";
-
+roundSetup();
 document.onkeyup = function(event) {
-
   // Capture keystroke from user & converts letter to uppercase.
   userGuess = String.fromCharCode(event.which).toUpperCase();
   console.log(userGuess);
 
   /* Compare the letter to lettersGuessed array, if the letter is in the lettersGuessed array --> notify user that they already guessed this letter. If the letter is not in the lettersGuessed array --> add letter to lettersGuessed array, subtract 1 from guessesRemaining, and compare letter to the randomWord array index. */
 
-  if (lettersGuessed.indexOf(userGuess) === -1) {
-    lettersGuessed.push(userGuess);
+  if ((lettersGuessed.indexOf(userGuess) === -1) && (randomArray.indexOf(userGuess) === -1)) {
+    lettersGuessed.push(" " + userGuess + " ");
     console.log(lettersGuessed);
     document.getElementById("guessed-letters").innerHTML = lettersGuessed;
     guessesRemaining -= 1;
@@ -93,17 +96,36 @@ document.onkeyup = function(event) {
   for (var i = 0; i < randomArray.length; i++) { 
     if (userGuess === randomArray[i]) {
       blanksArray[i] = userGuess;
-      // lettersGuessed.push(userGuess);
-      guessesRemaining -= 0;
-      console.log(blanksArray);
+      guessesRemaining = guessesRemaining;
     }
   }
   console.log(blanksArray);
   document.getElementById("answer-blanks").innerHTML = blanksArray.join("");
-  // }
+
+  if (blanksArray.indexOf(" _ ") === -1) {
+    console.log("You Win this round!");
+    wins += 1;
+    roundSetup();
+  } else if (guessesRemaining === 0) {
+    console.log("You lose this round!");
+    losses += 1;
+    roundSetup();
+  }
+  document.querySelector("#wins").innerHTML = "<p>" + wins + "</p>";
+  document.querySelector("#losses").innerHTML = "<p>" + losses + "</p>";
+  
+  if (losses === 5) {
+    alert("You lose!");
+    roundSetup();
+    gameScoreReset();
+  } else if (wins === 5) {
+    alert("You win!");
+    roundSetup();
+    gameScoreReset();
+  }
 };
 
-setupFunction();
+
  
 
 

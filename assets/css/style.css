@@ -1,0 +1,9 @@
+body {
+  /* background-image: url("../images/got-houseSigils.jpg"); */
+  background-repeat: repeat;
+  background-size: 500px;
+  font-family: "Arial", "Helvetica Neue", Helvetica, sans-serif;
+  margin-bottom: 60px;
+}
+
+.jumbotron {
