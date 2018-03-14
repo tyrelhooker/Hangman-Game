@@ -2,32 +2,41 @@ body {
   background-image: url("../images/silver_scales.png");
   background-repeat: repeat;
   /* background-size: 100px; */
-  font-family: 'Berkshire Swash', cursive, "Helvetica Neue", Helvetica, sans-serif;
+  font-family: cursive, 'Berkshire Swash', "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 100;
   margin-bottom: 60px;
 }
 
 .container {
-  padding: 2%;
+  padding-top: 1%;
 }
 
 .jumbotron {
   background: black;
   color: silver;
-  padding-top: 0px;
+  padding: 2% 5% 5% 5%;
 }
 
 #prompt {
   text-align: center;
+  font-size: 20px;
 }
+
 .display-4 {
   text-align: center;
   margin: 0;
   padding: 0;
 }
 
+#instructions {
+  padding-left: 5%;
+  /* letter-spacing: 1px; */
+  font-family: 'Lato', sans-serif;
+}
+
 #sigils {
-  opacity: 0.2;
-  padding: 8% 5% 5% 5%;
+  opacity: 0.3;
+  padding: 8% 8% 0 8%;
 }
 
 .sigilsWrapper {
@@ -37,12 +46,12 @@ body {
 .row {
   border-style: dotted;
   background-image: url("../images/silver_scales.png");
+  padding: 0px;
 }
 
 .mainContent {
   border-style: dotted;
   padding: 2%;
-  
 }
 
 h2 {
@@ -50,9 +59,8 @@ h2 {
   color: silver;
   padding: 2%;
   text-align: center;
+  font-size: 28px;
 }
-
-
 
 #answer-blanks, #game-counter, 
 #guessed-letters,
@@ -62,23 +70,3 @@ h2 {
   font-size: 20px;
 }
 
-
-.fade1 {
-  opacity: 0.2;
-}
-
-.fade2 {
-  opacity: 0.4;
-}
-
-.fade3 {
-  opacity: 0.6;
-}
-
-.fade4 {
-  opacity: 0.8;
-}
-
-.fade5 {
-  opacity: 1.0;
-}

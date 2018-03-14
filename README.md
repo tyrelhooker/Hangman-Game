@@ -1,4 +1,12 @@
 # Hangman-Game
+By: T.J. Hooker
+Date: March 14, 2018
+
+The object of the game is to guess the Game of Thrones major house(family) name within 6 tries. If the player fails to guess the correct letters in 6 tries, then they lose the round. If the player guesses the correct letter in 6 tries, then they win the round. If the player loses 5 rounds then the player loses the game. If the player wins 5 rounds then they win the game. 
+
+For each wrong guess the house sigil for the opponent grows brighter. Guessing a correct letter stops the sigil from growing brighter. Since there are many families in the houses, a house may be repeated more than once. 
+
+
 
 Pseudocode for Hangman-Game
 Game of Thrones Theme
