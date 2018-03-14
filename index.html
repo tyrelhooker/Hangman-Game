@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <!-- <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash" rel="stylesheet"> -->
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
 
@@ -16,16 +16,19 @@
   <body>
     <div class="container pt-s">
       <div class="jumbotron">
-        <h1 class="display-4" id="startButton">Game of Thrones Hangman</h1>
+        <h1 class="display-4" id="startButton">Game of Thrones<br> Hangman</h1>
         <p class="lead">
           <div>Game Instructions</div>
-            <div id="instructions"></div>
+            <div id="instructions">
+              <p>You have entered the Game of Thrones</p>
+              <p>You must defeat five major houses of Westeros. You have 6 attempts to guess the letters in the major houses. By defeating five major houses you will encourage George R. R. Martin to finish the book series before the T.V. series. The game is won, if, and only if, George R. R. Martin finishes the book series before the T.V. series.</p>
+            </div>
           <div id="prompt">Please Press a Letter to Begin</div></p>
         <hr class="my-4">
         <div class="row">
-          <div class="col-6">
+          <div class="col-6 mainContent">
             <div id="output">
-              <h2>The Word</h2>
+              <h2>The House</h2>
                 <div id="answer-blanks"></div>
               <h2>Lives Remaining</h2>
                 <div id="game-counter"></div>
@@ -37,13 +40,10 @@
                 <div id="losses"></div>
             </div>
           </div>
-          <div class="col-6">
+          <div class="col-6 sigilsWrapper">
             <img id="sigils" src="" class="img-fluid">
           </div>
         </row>
-        <p class="lead">
-          <div class="btn btn-primary btn-lg">Restart</div>
-        </p>
       </div>
       
 

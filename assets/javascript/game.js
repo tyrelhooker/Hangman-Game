@@ -20,6 +20,8 @@ var wins = 0;
 var losses = 0;
 var userGuess; 
 var img;
+var keySound = new Audio('./assets/audio/swords-press.wav');
+var winSound = new Audio('./assets/audio/fanfare_x.wav');    
 
 // Function that updates the html score
 function updateRemainingGuesses() {
@@ -47,19 +49,19 @@ function fadeSigils(sigils) {
     value = fader.value;
   if (guessesRemaining === 6) {
     var fader = document.getElementById("sigils");
-    fader.style.opacity = "0.2";
+    fader.style.opacity = "0.3";
   } else if (guessesRemaining === 5) {
     var fader = document.getElementById("sigils");
-    fader.style.opacity = "0.3";
+    fader.style.opacity = "0.4";
   } else if (guessesRemaining === 4) {
     var fader = document.getElementById("sigils");
-    fader.style.opacity = "0.5";
+    fader.style.opacity = "0.6";
   } else if (guessesRemaining === 3) {
     var fader = document.getElementById("sigils");
-    fader.style.opacity = "0.7";
+    fader.style.opacity = "0.8";
   } else if (guessesRemaining === 2) {
     var fader = document.getElementById("sigils");
-    fader.style.opacity = "0.9";
+    fader.style.opacity = "1.0";
   } else if (guessesRemaining === 1) {
     var fader = document.getElementById("sigils");
     fader.style.opacity = "1.0";
@@ -69,7 +71,7 @@ function fadeSigils(sigils) {
 
 // Sets up the game for each round after a round loss or win
 function roundSetup() {
-  document.getElementById("instructions").innerHTML = "<p>You have entered the Game of Thrones</p>" + "<p>You must defeat five major houses. Defeating five major houses will encourage George R.R. Martin to finish the book series before the T.V. series. The game is won, if, and only if, George R.R. Martin finishes the book series before the T.V. series.</p>";
+  // document.getElementById("instructions").innerHTML = ;
 
   // Move a random word from wordBank to randomWord.   
   var randomWord = wordBank[Math.floor(Math.random() * wordBank.length)];
@@ -137,23 +139,29 @@ gameScoreReset();
 document.onkeyup = function(event) {
   // Capture keystroke from user & converts letter to uppercase.
   userGuess = String.fromCharCode(event.which).toUpperCase();
+  keySound.play();
   console.log(userGuess);
 
   /* Compare the letter to lettersGuessed array, if the letter is in the lettersGuessed array --> notify user that they already guessed this letter. If the letter is not in the lettersGuessed array --> add letter to lettersGuessed array, subtract 1 from guessesRemaining, and compare letter to the randomWord array index. */
   fadeSigils();
-
-  if ((lettersGuessed.indexOf(userGuess) === -1) && (randomArray.indexOf(userGuess) === -1)) {
-    lettersGuessed.push(" " + userGuess + " ");
-    console.log(lettersGuessed);
-    document.getElementById("guessed-letters").innerHTML = lettersGuessed;
-    guessesRemaining -= 1;
-    updateRemainingGuesses();
-  } else {
-    console.log("You have already guessed this letter.");
-    updateRemainingGuesses();
-    guessesRemaining = guessesRemaining;
-    console.log(guessesRemaining);
+  
+  if (userGuess.length !== 1) {
+    return;
+  } else if (event.keyCode >= 65 && event.keyCode <= 90) {
+    if ((lettersGuessed.indexOf(userGuess) === -1) && (randomArray.indexOf(userGuess) === -1)) {
+      lettersGuessed.push(" " + userGuess + " ");
+      console.log(lettersGuessed);
+      document.getElementById("guessed-letters").innerHTML = lettersGuessed;
+      guessesRemaining -= 1;
+      updateRemainingGuesses();
+    } else {
+      updateRemainingGuesses();
+      guessesRemaining = guessesRemaining;
+      console.log(guessesRemaining);
+    }
   }
+
+
 
    // Loop through the randomWord array, if the letter is in the randomWord array, at each index where letter is found, replace the corresponding blank in the blank array. If letter is not in the randomWord array, add letter to lettersGuessed array. 
 
@@ -167,19 +175,22 @@ document.onkeyup = function(event) {
       blanksArray[i] = userGuess;
       guessesRemaining = guessesRemaining;
     }
+    console.log(userGuess);
   }
   console.log(blanksArray);
   document.getElementById("answer-blanks").innerHTML = blanksArray.join("");
 
   if (blanksArray.indexOf(" _ ") === -1) {
-    console.log("You Win this round!");
+    console.log(userGuess);
     wins += 1;
-    console.log();
+    alert("You win this round!");
+    console.log(wins);
     roundSetup();
   } else if (guessesRemaining === 0) {
-    console.log("You lose this round!");
+    updateRemainingGuesses();
     losses += 1;
-    console.log();
+    alert("You lose this round!");
+    console.log(losses);
     roundSetup();
   }
   document.querySelector("#wins").innerHTML = "<p>" + wins + "</p>";
@@ -187,9 +198,12 @@ document.onkeyup = function(event) {
   
   if (losses === 5) {
     alert("You lose!");
+    console.log(wins);
+    console.log(losses);
     roundSetup();
     gameScoreReset();
   } else if (wins === 5) {
+    winSound.play();
     alert("You win!");
     roundSetup();
     gameScoreReset();
