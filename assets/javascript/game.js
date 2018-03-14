@@ -64,10 +64,10 @@ function fadeSigils(sigils) {
     value = fader.value;
   if (guessesRemaining === 6) {
     var fader = document.getElementById("sigils");
-    fader.style.opacity = "0.4";
+    fader.style.opacity = "0.3";
   } else if (guessesRemaining === 5) {
     var fader = document.getElementById("sigils");
-    fader.style.opacity = "0.6";
+    fader.style.opacity = "0.5";
   } else if (guessesRemaining === 4) {
     var fader = document.getElementById("sigils");
     fader.style.opacity = "0.7";
