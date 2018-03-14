@@ -21,11 +21,12 @@ var losses = 0;
 var userGuess; 
 var img;
 
-// Function that updates the score
+// Function that updates the html score
 function updateRemainingGuesses() {
   document.querySelector ("#game-counter").innerHTML = "<p>" + guessesRemaining + "</p>";
 }
 
+//Resets the wins and losses after each game and changes html.
 function gameScoreReset() {
   wins = 0;
   losses = 0;
@@ -33,27 +34,40 @@ function gameScoreReset() {
   document.querySelector ("#losses").innerHTML = "<p>" + losses+ "</p";
 }
 
-function fadeSigil() {
-  if (guessesRemaining === 5) {
-    document.getElementById("sigil");
-    element.classList.add("fade1");
+// Resets the sigil opcity to 0.1 after a loss
+function fadeSigilsReset(sigils) {
+  var fader = document.getElementById("sigils"),
+    value = fader.value;  
+  fader.style.opacity = "0.1";
+}
+
+// Increases opacity of the opponent sigil as players guessesRemaining decrease
+function fadeSigils(sigils) {
+  var fader = document.getElementById("sigils"),
+    value = fader.value;
+  if (guessesRemaining === 6) {
+    var fader = document.getElementById("sigils");
+    fader.style.opacity = "0.2";
+  } else if (guessesRemaining === 5) {
+    var fader = document.getElementById("sigils");
+    fader.style.opacity = "0.3";
   } else if (guessesRemaining === 4) {
-    document.getElementById("sigil").removeAttribute("fade1");
-    document.getElementById("sigil");
-    element.classList.add("fade2");
-  } else if (guessesRemaining === 4) {
-    document.getElementById("sigil").removeAttribute("fade2");
-    document.getElementById("sigil");
-    element.classList.add("fade3");
-  } else if (guessesRemaining === 4) {
-    document.getElementById("sigil");
-    element.classList.add("fade4");
-  } else if (guessesRemaining === 4) {
-    document.getElementById("sigil");
-    element.classList.add("fade5");
+    var fader = document.getElementById("sigils");
+    fader.style.opacity = "0.5";
+  } else if (guessesRemaining === 3) {
+    var fader = document.getElementById("sigils");
+    fader.style.opacity = "0.7";
+  } else if (guessesRemaining === 2) {
+    var fader = document.getElementById("sigils");
+    fader.style.opacity = "0.9";
+  } else if (guessesRemaining === 1) {
+    var fader = document.getElementById("sigils");
+    fader.style.opacity = "1.0";
+    fadeSigilsReset();
   }
 };
 
+// Sets up the game for each round after a round loss or win
 function roundSetup() {
   document.getElementById("instructions").innerHTML = "<p>You have entered the Game of Thrones</p>" + "<p>You must defeat five major houses. Defeating five major houses will encourage George R.R. Martin to finish the book series before the T.V. series. The game is won, if, and only if, George R.R. Martin finishes the book series before the T.V. series.</p>";
 
@@ -126,6 +140,7 @@ document.onkeyup = function(event) {
   console.log(userGuess);
 
   /* Compare the letter to lettersGuessed array, if the letter is in the lettersGuessed array --> notify user that they already guessed this letter. If the letter is not in the lettersGuessed array --> add letter to lettersGuessed array, subtract 1 from guessesRemaining, and compare letter to the randomWord array index. */
+  fadeSigils();
 
   if ((lettersGuessed.indexOf(userGuess) === -1) && (randomArray.indexOf(userGuess) === -1)) {
     lettersGuessed.push(" " + userGuess + " ");
