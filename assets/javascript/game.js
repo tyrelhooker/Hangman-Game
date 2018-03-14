@@ -18,11 +18,12 @@ var randomArray = [];
 var blanksArray = [];
 var wins = 0;
 var losses = 0;
-var userGuess; 
+var userGuess= " " + userGuess + " "; 
 var img;
 var keySound = new Audio("./assets/audio/swords-press.wav");
 var winSound = new Audio("./assets/audio/fanfare_x.wav"); 
-var errorSound = new Audio("./assets/audio/error.wav");   
+var errorSound = new Audio("./assets/audio/error.wav");  
+var failSound = new Audio("./assets/audio/fail.wav"); 
 
 // Function that updates the html score
 function updateRemainingGuesses() {
@@ -37,6 +38,19 @@ function gameScoreReset() {
   document.querySelector ("#losses").innerHTML = "<p>" + losses+ "</p";
 }
 
+function gameCounter() {
+  if (losses === 5) {
+    failSound.play();
+    alert("You lose! George R. R. Martin has determined that the T.V. series is “good enough” and starts writing romance novels.");
+    roundSetup();
+    gameScoreReset();
+  } else if (wins === 5) {
+    winSound.play();
+    alert("You win! You have inspired George R. R. Martin to finish the written series before the T.V. finale.");
+    roundSetup();
+    gameScoreReset();
+  }
+}
 // Resets the sigil opcity to 0.1 after a loss
 function fadeSigilsReset(sigils) {
   var fader = document.getElementById("sigils"),
@@ -72,7 +86,6 @@ function fadeSigils(sigils) {
 
 // Sets up the game for each round after a round loss or win
 function roundSetup() {
-
   // Move a random word from wordBank to randomWord.   
   var randomWord = wordBank[Math.floor(Math.random() * wordBank.length)];
   console.log(randomWord);
@@ -98,7 +111,6 @@ function roundSetup() {
     document.getElementById('sigils').src="assets/images/martell.jpg";
   }
   
-
   // Move the randomWord to randomArray and split the randomWord letters into an index. 
   randomArray = randomWord.split("");
   console.log(randomArray);
@@ -108,7 +120,6 @@ function roundSetup() {
   for (var i = 0; i < randomArray.length; i++) { 
     blanksArray[i] = " _ ";
   }
-
   document.getElementById("answer-blanks").innerHTML = "<p>" + blanksArray + "</p>";
   document.getElementById("answer-blanks").innerHTML = blanksArray.join("");
 
@@ -126,6 +137,7 @@ roundSetup();
 gameScoreReset();
 // Main game loop controled by onkeyup
 document.onkeyup = function(event) {
+
   // Capture keystroke from user & converts letter to uppercase.
   userGuess = String.fromCharCode(event.which).toUpperCase();
   if (event.keyCode >= 65 && event.keyCode <= 90) {
@@ -140,19 +152,19 @@ document.onkeyup = function(event) {
   // Compare the letter to lettersGuessed array  & update gueses
   if (userGuess.length !== 1) {
     return;
-  } else if (event.keyCode >= 65 && event.keyCode <= 90) {
+  } 
+  
+  if (event.keyCode >= 65 && event.keyCode <= 90) {
     if ((lettersGuessed.indexOf(userGuess) === -1) && (randomArray.indexOf(userGuess) === -1)) {
-      lettersGuessed.push(" " + userGuess + " ");
-      console.log(lettersGuessed);
-      document.getElementById("guessed-letters").innerHTML = "<p> [ " + lettersGuessed + " ]</p>";
+      lettersGuessed.push(userGuess);
+      document.getElementById("guessed-letters").innerHTML = "<p> [ " + lettersGuessed + " ] </p>";
       guessesRemaining -= 1;
       updateRemainingGuesses();
     } else {
       updateRemainingGuesses();
       guessesRemaining = guessesRemaining;
-      console.log(guessesRemaining);
     }
-  } 
+  }
 
    // Loop through the randomWord array, if the letter is in the randomWord array and replace blanks
   for (var i = 0; i < randomArray.length; i++) { 
@@ -160,40 +172,22 @@ document.onkeyup = function(event) {
       blanksArray[i] = userGuess;
       guessesRemaining = guessesRemaining;
     }
-    console.log(userGuess);
   }
-  console.log(blanksArray);
   document.getElementById("answer-blanks").innerHTML = blanksArray.join("");
 
   //Determines the wins and losses of the rounds and produces alert
   if (blanksArray.indexOf(" _ ") === -1) {
-    console.log(userGuess);
     wins += 1;
+    document.querySelector("#wins").innerHTML = "<p>" + wins + "</p>";
     alert("You win this round! George R. R. Martin has completed another 1,000 pages in the Song of Fire and Ice series”");
-    console.log(wins);
     roundSetup();
   } else if (guessesRemaining === 0) {
-    updateRemainingGuesses();
     losses += 1;
+    document.querySelector("#losses").innerHTML = "<p>" + losses + "</p>";
     alert("You lose this round! George R. R. Martin has delayed the next book in the Song of Fire and Ice series for another year.");
-    console.log(losses);
     roundSetup();
   }
-  document.querySelector("#wins").innerHTML = "<p>" + wins + "</p>";
-  document.querySelector("#losses").innerHTML = "<p>" + losses + "</p>";
-  
   // Game counter
-  if (losses === 5) {
-    alert("You lose! George R. R. Martin has determined that the T.V. series is “good enough” and starts writing romance novels.");
-    console.log(wins);
-    console.log(losses);
-    roundSetup();
-    gameScoreReset();
-  } else if (wins === 5) {
-    winSound.play();
-    alert("You win! You have inspired George R. R. Martin to finish the written series before the T.V. finale.");
-    roundSetup();
-    gameScoreReset();
-  }
+  gameCounter();
 };
 
