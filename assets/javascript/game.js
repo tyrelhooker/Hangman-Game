@@ -11,24 +11,48 @@ var wordBank = [
   "MARTELL"
 ];
 
-var guessesRemaining = 5;
+var guessesRemaining = 6;
 var lettersGuessed = [];
 var randomWord = "";
 var randomArray = [];
 var blanksArray = [];
 var wins = 0;
 var losses = 0;
-var userGuess;
+var userGuess; 
+var img;
 
 // Function that updates the score
 function updateRemainingGuesses() {
-  document.querySelector ("#game-counter").innerHTML = "<p>" + guessesRemaining + "</p";
+  document.querySelector ("#game-counter").innerHTML = "<p>" + guessesRemaining + "</p>";
 }
 
 function gameScoreReset() {
   wins = 0;
   losses = 0;
+  document.querySelector ("#wins").innerHTML = "<p>" + wins + "</p";
+  document.querySelector ("#losses").innerHTML = "<p>" + losses+ "</p";
 }
+
+function fadeSigil() {
+  if (guessesRemaining === 5) {
+    document.getElementById("sigil");
+    element.classList.add("fade1");
+  } else if (guessesRemaining === 4) {
+    document.getElementById("sigil").removeAttribute("fade1");
+    document.getElementById("sigil");
+    element.classList.add("fade2");
+  } else if (guessesRemaining === 4) {
+    document.getElementById("sigil").removeAttribute("fade2");
+    document.getElementById("sigil");
+    element.classList.add("fade3");
+  } else if (guessesRemaining === 4) {
+    document.getElementById("sigil");
+    element.classList.add("fade4");
+  } else if (guessesRemaining === 4) {
+    document.getElementById("sigil");
+    element.classList.add("fade5");
+  }
+};
 
 function roundSetup() {
   document.getElementById("instructions").innerHTML = "<p>You have entered the Game of Thrones</p>" + "<p>You must defeat five major houses. Defeating five major houses will encourage George R.R. Martin to finish the book series before the T.V. series. The game is won, if, and only if, George R.R. Martin finishes the book series before the T.V. series.</p>";
@@ -36,6 +60,37 @@ function roundSetup() {
   // Move a random word from wordBank to randomWord.   
   var randomWord = wordBank[Math.floor(Math.random() * wordBank.length)];
   console.log(randomWord);
+
+  // Places sigil corresponding with randomWord to the right of contents
+  if (randomWord === "STARK") {
+    // img = "img src='assets/images/stark.png'>";
+    document.getElementById("sigils").src="assets/images/stark.png";
+  } else if (randomWord ==="LANNISTER") {
+    // img = "<img src ='../assets/images/lannister.jpg'>";
+    document.getElementById('sigils').src="assets/images/lannister.jpg";
+  } else if (randomWord ==="TARGARYEN") {
+    img = "<img src ='../assets/images/targaryen.png'>";
+    document.getElementById('sigils').src="assets/images/targaryen.png";
+  } else if (randomWord ==="ARRYN") {
+    // img = "<img src ='assets/images/arryn.png'>";
+    document.getElementById("sigils").src = "assets/images/arryn.png";
+  } else if (randomWord ==="TULLY") {
+    // img = "<img src ='../assets/images/tully.jpg'>";
+    document.getElementById('sigils').src= "assets/images/tully.jpg";
+  } else if (randomWord ==="GREYJOY") {
+    // img = "<img src ='../assets/images/greyjoy.jpg'>";
+    document.getElementById('sigils').src="assets/images/greyjoy.jpg";
+  } else if (randomWord ==="BARATHEON") {
+    // img = "<img src ='../assets/images/baratheon.png'>"; 
+    document.getElementById('sigils').src="assets/images/baratheon.png";
+  } else if (randomWord ==="TYRELL") {
+    // img = "<img src ='../assets/images/tyrell.jpg'>";
+    document.getElementById('sigils').src="assets/images/tyrell.jpg";
+  } else if (randomWord ==="MARTELL") {
+    // img = "<img src ='../assets/images/martell.jpg'>";
+    document.getElementById('sigils').src="assets/images/martell.jpg";
+  }
+  
 
   // Move the randomWord to randomArray and split the randomWord letters into an index. 
   randomArray = randomWord.split("");
@@ -62,10 +117,9 @@ function roundSetup() {
 };
 
 
-document.getElementById("startButton").addEventListener("click", roundSetup);
-// Ask user to guess a letter. 
-// document.getElementById("prompt").innerHTML = "<p>Please press a letter</p>";
+
 roundSetup();
+gameScoreReset();
 document.onkeyup = function(event) {
   // Capture keystroke from user & converts letter to uppercase.
   userGuess = String.fromCharCode(event.which).toUpperCase();
@@ -105,10 +159,12 @@ document.onkeyup = function(event) {
   if (blanksArray.indexOf(" _ ") === -1) {
     console.log("You Win this round!");
     wins += 1;
+    console.log();
     roundSetup();
   } else if (guessesRemaining === 0) {
     console.log("You lose this round!");
     losses += 1;
+    console.log();
     roundSetup();
   }
   document.querySelector("#wins").innerHTML = "<p>" + wins + "</p>";
