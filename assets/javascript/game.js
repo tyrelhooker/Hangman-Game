@@ -80,6 +80,9 @@ function fadeSigils(sigils) {
   } else if (guessesRemaining === 1) {
     var fader = document.getElementById("sigils");
     fader.style.opacity = "1.0";
+  } else if (guessesRemaining === 0) {
+    var fader = document.getElementById("sigils");
+    fader.style.opacity = "1.0";
     fadeSigilsReset();
   }
 };
@@ -135,9 +138,9 @@ function roundSetup() {
 // *****START OF GAME*****
 roundSetup();
 gameScoreReset();
+fadeSigils();
 // Main game loop controled by onkeyup
 document.onkeyup = function(event) {
-
   // Capture keystroke from user & converts letter to uppercase.
   userGuess = String.fromCharCode(event.which).toUpperCase();
   if (event.keyCode >= 65 && event.keyCode <= 90) {
@@ -147,21 +150,20 @@ document.onkeyup = function(event) {
   }
   console.log(userGuess);
 
-  // Reset sigils fade
-  fadeSigils();
   // Compare the letter to lettersGuessed array  & update gueses
   if (userGuess.length !== 1) {
     return;
   } 
-  
   if (event.keyCode >= 65 && event.keyCode <= 90) {
     if ((lettersGuessed.indexOf(userGuess) === -1) && (randomArray.indexOf(userGuess) === -1)) {
       lettersGuessed.push(userGuess);
       document.getElementById("guessed-letters").innerHTML = "<p> [ " + lettersGuessed + " ] </p>";
       guessesRemaining -= 1;
       updateRemainingGuesses();
+      fadeSigils();
     } else {
       updateRemainingGuesses();
+      fadeSigils();
       guessesRemaining = guessesRemaining;
     }
   }
